@@ -1,0 +1,32 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="utf-8")
+        title="Uplimg paste"
+        link(rel="stylesheet" type="text/css" href="/stylesheets/style.css")
+    body
+        div(style="width:100%;height:100%;",id="editor")
+        script(src="http://code.jquery.com/jquery-2.1.1.min.js")
+        script(src="https://cdn.socket.io/socket.io-1.1.0.js")
+        script(src="ace/ace.js")
+        script.
+            /* Enable code editor */
+            var editor = ace.edit('editor');
+            editor.setTheme('ace/theme/ambiance');
+            editor.getSession().setMode("ace/mode/c_cpp");
+
+            var socket = io();
+
+            var anchor = editor.getSession().getDocument().createAnchor(editor.getSession().getDocument().getLength(), 2);
+
+            socket.on('newContent', function(msg){
+                var position = editor.getCursorPosition();
+                editor.setValue(msg, -1);
+                editor.moveCursorToPosition(position);
+            });
+
+            editor.on('change', function(e){
+                anchor = editor.getSession().getDocument().createAnchor(editor.getSession().getDocument().getLength(), 2);
+                if(editor.curOp && editor.curOp.command.name)
+                    socket.emit('modifiedContent', editor.getValue());
+            });
