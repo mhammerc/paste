@@ -14,7 +14,7 @@ resolver.register("jade", jade);
 app.use(express.static('./public'));
 
 app.get('/', function(req,res){
-    res.send("Welcome ! Now select a room :-)");
+    res.send("Welcome ! Now select a room :-) !");
 });
 
 app.get('/:room', room.index);
