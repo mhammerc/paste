@@ -5,3 +5,14 @@
   bottom: 0;
   left: 0;
 }
+
+#saved {
+  position: fixed;
+  top: 5px; right: 5px;
+  z-index: 9999;
+  background: #74a7d7;
+  border-radius: 3px;
+  padding: 5px;
+  color:white;
+  font: 13px "Monda", Helvetica, Arial, sans-serif;
+}

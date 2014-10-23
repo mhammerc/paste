@@ -5,7 +5,8 @@ html(lang="en")
         title="Uplimg paste"
         link(rel="stylesheet" type="text/css" href="/stylesheets/style.css")
     body
-        div(style="width:100%;height:100%;",id="editor")
+        div(id="editor")
+        div(id="saved",style="opacity:0;") File saved
         script(src="http://code.jquery.com/jquery-2.1.1.min.js")
         script(src="https://cdn.socket.io/socket.io-1.1.0.js")
         script(src="ace/ace.js")
@@ -14,6 +15,7 @@ html(lang="en")
             var editor = ace.edit('editor');
             editor.setTheme('ace/theme/ambiance');
             editor.getSession().setMode("ace/mode/c_cpp");
+            editor.resize(true);
 
             var socket = io();
 
@@ -23,6 +25,12 @@ html(lang="en")
                 var position = editor.getCursorPosition();
                 editor.setValue(msg, -1);
                 editor.moveCursorToPosition(position);
+            });
+
+            socket.on('saved', function(msg){
+                $('#saved').fadeTo(750, '1')
+                setTimeout(function(){ $('#saved').fadeTo(3000, '0'); }, 1250);
+
             });
 
             editor.on('change', function(e){

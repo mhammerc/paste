@@ -71,5 +71,7 @@ function onModifiedContent(socket){
 function savePaste(socket, content){
     fs.writeFile(pasteStoreDir + socket.room, content);
     editor[socket.room].saved = true;
+    socket.broadcast.to(socket.room).emit('saved', 'ok');
+    socket.emit('saved', 'ok');
     debug.debug('Saved');
 }
