@@ -1,4 +1,4 @@
-Uplimg paste
+Uplimg paste (obselete, that was a try)
 ========
 
 This is an node.js application with socket.io and express.
